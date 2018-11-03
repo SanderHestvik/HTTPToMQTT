@@ -1,19 +1,19 @@
-from flask import Flask
+from flask import Flask, request
 import paho.mqtt.client as mqtt
 app = Flask(__name__)
-topic = "teknobyen/doors/front/open"
+topic = "teknobyen/doors/front/open2"
 
-username = ""
-password = ""
+
 def on_connect(client, userdate, flags, rc):
-    print("publishing teknobyen/doors/front/open")
     client.publish(topic, payload=1)
 
 
 @app.route("/")
 def open_door():
-
-
+    username = request.args.get("username")
+    print(username)
+    password = request.args.get("password")
+    print(password)
     print("creating new instance")
     client = mqtt.Client()
     client.username_pw_set(username, password)
